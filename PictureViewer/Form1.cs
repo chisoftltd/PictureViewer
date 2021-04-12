@@ -21,6 +21,7 @@ namespace PictureViewer
         public int numOfFiles { get; private set; }
         public string[] aryFilePaths { get; private set; }
         public int counter { get; private set; }
+        public string bigFileName { get; private set; }
 
         private void btnLoadImages_Click(object sender, EventArgs e)
         {
@@ -61,6 +62,21 @@ namespace PictureViewer
             catch (Exception err)
             {
                 MessageBox.Show(err.Message);
+            }
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            GetOrignalImage();
+        }
+
+        private void GetOrignalImage()
+        {
+            for (int i = 0; i < listView1.SelectedItems.Count; i++)
+            {
+                bigFileName = listView1.SelectedItems[i].Text;
+                pictureBox1.Image = Image.FromFile(bigFileName);
+                panel1.AutoScrollMinSize = new Size(pictureBox1.Image.Width, pictureBox1.Image.Height);
             }
         }
     }
