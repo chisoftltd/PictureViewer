@@ -47,9 +47,16 @@ namespace PictureViewer
                 {
                     aryFilePaths[counter] = singleFile;
                     imageList1.Images.Add(Image.FromFile(singleFile));
-                    listView1.LargeImageList = imageList1;
                     counter++;
                 }
+
+                listView1.LargeImageList = imageList1;
+
+                for (int i = 0; i < counter; i++)
+                {
+                    listView1.Items.Add(aryFilePaths[i], i);
+                }
+
             }
             catch (Exception err)
             {
