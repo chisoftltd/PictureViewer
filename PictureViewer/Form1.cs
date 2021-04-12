@@ -22,6 +22,11 @@ namespace PictureViewer
         public string[] aryFilePaths { get; private set; }
         public int counter { get; private set; }
         public string bigFileName { get; private set; }
+        public Bitmap bmp { get; private set; }
+        public int newWidth { get; private set; }
+        public int newHeight { get; private set; }
+        public Bitmap bmpNew { get; private set; }
+        public Graphics gr { get; private set; }
 
         private void btnLoadImages_Click(object sender, EventArgs e)
         {
@@ -78,6 +83,34 @@ namespace PictureViewer
                 pictureBox1.Image = Image.FromFile(bigFileName);
                 panel1.AutoScrollMinSize = new Size(pictureBox1.Image.Width, pictureBox1.Image.Height);
             }
+        }
+
+        private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button==MouseButtons.Right)
+            {
+                GetZoom(2);
+            }
+            else if (e.Button==MouseButtons.Left)
+            {
+                GetOrignalImage();
+            }
+        }
+
+        private void GetZoom(int zoomSize)
+        {
+            bmp = new Bitmap(pictureBox1.Image);
+
+            newWidth = pictureBox1.Image.Width / zoomSize;
+            newHeight = pictureBox1.Image.Height / zoomSize;
+
+            bmpNew = new Bitmap(newWidth, newHeight);
+
+            gr = Graphics.FromImage(bmpNew);
+            gr.DrawImage(bmp, 0, 0, bmpNew.Width, bmpNew.Height);
+
+            pictureBox1.Image = bmpNew;
+            panel1.AutoScrollMinSize = new Size(pictureBox1.Image.Width, pictureBox1.Image.Height);
         }
     }
 }
